@@ -17,7 +17,7 @@ namespace ConsoleApplication
             dayTwo.Run();
 
             Console.WriteLine("Day two. Code: " + dayTwo.GetFirstResult() + ".");
-            //Console.WriteLine("Day one. Distance to first visited twice: " + dayOne.GetSecondResult());
+            Console.WriteLine("Day two. Second code: " + dayTwo.GetSecondResult());
 
         }
     }
