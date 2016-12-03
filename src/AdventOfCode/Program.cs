@@ -22,8 +22,8 @@ namespace ConsoleApplication
             var dayThree = new Three(System.IO.File.ReadAllText("../../input/DayThree.txt"));
             dayThree.Run();
 
-            Console.WriteLine("Day three. Code: " + dayThree.GetFirstResult() + ".");
-            //Console.WriteLine("Day three. Second code: " + dayThree.GetSecondResult());
+            Console.WriteLine("Day three. Count: " + dayThree.GetFirstResult() + ".");
+            Console.WriteLine("Day three. Second Count: " + dayThree.GetSecondResult());
 
         }
     }

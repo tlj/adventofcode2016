@@ -47,4 +47,23 @@ public class DayThreeTests
 
         Assert.Equal(expected, actual);
     }
+
+    [Fact]
+    public void ColumnsExampleTest()
+    {
+        string input = @"101 301 501
+102 302 502
+103 303 503
+201 401 601
+202 402 602
+203 403 603";
+
+        var day = new Three(input);
+        day.Run();
+
+        string expected = "6";
+        string actual = day.GetSecondResult();
+
+        Assert.Equal(expected, actual);
+    }
 }

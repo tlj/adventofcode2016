@@ -7,7 +7,8 @@ namespace Days
     {
         string[] lines;
         int firstResult = 0;
-        
+        int secondResult = 0;
+
         public Three(string input)
         {
             lines = input.Split('\n');
@@ -23,9 +24,22 @@ namespace Days
             }
 
             var i = 0;
-            foreach (var triangle in lines) {
-                if (++i == 3) {
+            var triangles = new string[3];
+            foreach (var line in lines) {
+                var cols = SplitRow(line);
 
+                triangles[0] += " " + cols[0];
+                triangles[1] += " " + cols[1];
+                triangles[2] += " " + cols[2];
+
+                if (++i == 3) {
+                    for (var j = 0; j < 3; j++) {
+                        if(IsTriangle(triangles[j])) {
+                            secondResult++;
+                        }
+                    }
+                    triangles = new string[3];
+                    i = 0;
                 }
             }
         }
@@ -56,6 +70,11 @@ namespace Days
         public string GetFirstResult()
         {
             return firstResult.ToString();
+        }
+
+        public string GetSecondResult()
+        {
+            return secondResult.ToString();
         }
     }
 
