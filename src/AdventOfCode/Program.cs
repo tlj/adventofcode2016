@@ -19,6 +19,12 @@ namespace ConsoleApplication
             Console.WriteLine("Day two. Code: " + dayTwo.GetFirstResult() + ".");
             Console.WriteLine("Day two. Second code: " + dayTwo.GetSecondResult());
 
+            var dayThree = new Three(System.IO.File.ReadAllText("../../input/DayThree.txt"));
+            dayThree.Run();
+
+            Console.WriteLine("Day three. Code: " + dayThree.GetFirstResult() + ".");
+            //Console.WriteLine("Day three. Second code: " + dayThree.GetSecondResult());
+
         }
     }
 
