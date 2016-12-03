@@ -46,6 +46,8 @@ public class DayThreeTests
         string actual = day.GetFirstResult();
 
         Assert.Equal(expected, actual);
+
+        Assert.Equal("1921", day.GetSecondResult());
     }
 
     [Fact]
