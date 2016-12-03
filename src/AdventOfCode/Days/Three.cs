@@ -3,23 +3,26 @@ using System;
 namespace Days
 {
 
-    public class Three
+    public class Three : Base
     {
         string[] lines;
-        int firstResult = 0;
-        int secondResult = 0;
+        int firstResultInt = 0;
+        int secondResultInt = 0;
 
-        public Three(string input)
+        public Three(string dayInput)
         {
+            input = dayInput;
             lines = input.Split('\n');
         }
 
-        public void Run()
+        public override void Run()
         {
+            base.Run();
+            
             foreach (var triangle in lines)
             {
                 if (IsTriangle(triangle)) {
-                    firstResult++;
+                    firstResultInt++;
                 }
             }
 
@@ -35,13 +38,16 @@ namespace Days
                 if (++i == 3) {
                     for (var j = 0; j < 3; j++) {
                         if(IsTriangle(triangles[j])) {
-                            secondResult++;
+                            secondResultInt++;
                         }
                     }
                     triangles = new string[3];
                     i = 0;
                 }
             }
+
+            firstResult = firstResultInt.ToString();
+            secondResult = secondResultInt.ToString();
         }
 
         private int[] SplitRow(string row)
@@ -67,15 +73,6 @@ namespace Days
                     (sides[2] + sides[0] > sides[1]);
         }
 
-        public string GetFirstResult()
-        {
-            return firstResult.ToString();
-        }
-
-        public string GetSecondResult()
-        {
-            return secondResult.ToString();
-        }
     }
 
 }

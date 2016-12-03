@@ -4,20 +4,16 @@ using System.Numerics;
 
 namespace Days {
     
-    public class One : IDayInterface
+    public class One : Base
     {
         
-        private string directionString;
         private List<Vector2> visitedLocations; 
         private Vector2 firstVisitedTwice;
         bool hasVisitedTwice = false;
 
-        private int firstResult;
-        private float secondResult;
-
-        public One(string inputString)
+        public One(string dayInput)
         {
-            directionString = inputString;
+            input = dayInput;
         }
 
         private void CheckAndAddCoordinate(int X, int Y)
@@ -37,10 +33,12 @@ namespace Days {
             return Math.Abs(firstVisitedTwice.X) + Math.Abs(firstVisitedTwice.Y);
         }
 
-        public void Run()
+        public override void Run()
         {
-            string input = directionString.Replace(" ", "");
-            string[] instructions = input.Split(',');
+            base.Run();
+
+            string input2 = input.Replace(" ", "");
+            string[] instructions = input2.Split(',');
 
             int X = 0;
             int Y = 0;
@@ -87,18 +85,8 @@ namespace Days {
                 }
             } 
 
-            firstResult = Math.Abs(X) + Math.Abs(Y);
-            secondResult = GetFirstVisitedTwice();
-        }
-
-        public string GetFirstResult()
-        {
-            return firstResult.ToString();
-        }
-
-        public string GetSecondResult()
-        {
-            return secondResult.ToString();
+            firstResult = (Math.Abs(X) + Math.Abs(Y)).ToString();
+            secondResult = GetFirstVisitedTwice().ToString();
         }
 
     }

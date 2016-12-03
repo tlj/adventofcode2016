@@ -4,16 +4,14 @@ using System.Numerics;
 namespace Days
 {
 
-    public class Two : IDayInterface
+    public class Two : Base
     {
-        string firstResult;
-        string secondResult;
-
         string[] directionSets;
 
-        public Two(string input)
+        public Two(string dayInput)
         {
-            directionSets = input.Split('\n');
+            input = dayInput;
+            directionSets = dayInput.Split('\n');
         }
 
         public struct IntVector2
@@ -22,8 +20,10 @@ namespace Days
             public int Y;
         }
 
-        public void Run()
+        public override void Run()
         {
+            base.Run();
+
             var keyPad = new char?[,] { 
                 { '1', '2', '3' }, 
                 { '4', '5', '6' }, 
@@ -73,16 +73,6 @@ namespace Days
                 code += keyPad[pos.Y, pos.X].ToString();
             }
             return code;
-        }
-
-        public string GetFirstResult()
-        {
-            return firstResult;
-        }
-
-        public string GetSecondResult()
-        {
-            return secondResult;
         }
 
     }

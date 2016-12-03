@@ -7,23 +7,9 @@ namespace ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            var dayOne = new One(System.IO.File.ReadAllText("../../input/DayOne.txt"));
-            dayOne.Run();
-
-            Console.WriteLine("Day one. Distance: " + dayOne.GetFirstResult() + ".");
-            Console.WriteLine("Day one. Distance to first visited twice: " + dayOne.GetSecondResult());
-
-            var dayTwo = new Two(System.IO.File.ReadAllText("../../input/DayTwo.txt"));
-            dayTwo.Run();
-
-            Console.WriteLine("Day two. Code: " + dayTwo.GetFirstResult() + ".");
-            Console.WriteLine("Day two. Second code: " + dayTwo.GetSecondResult());
-
-            var dayThree = new Three(System.IO.File.ReadAllText("../../input/DayThree.txt"));
-            dayThree.Run();
-
-            Console.WriteLine("Day three. Count: " + dayThree.GetFirstResult() + ".");
-            Console.WriteLine("Day three. Second Count: " + dayThree.GetSecondResult());
+            new One(System.IO.File.ReadAllText("../../input/DayOne.txt")).Output();
+            new Two(System.IO.File.ReadAllText("../../input/DayTwo.txt")).Output();
+            new Three(System.IO.File.ReadAllText("../../input/DayThree.txt")).Output();
 
         }
     }
