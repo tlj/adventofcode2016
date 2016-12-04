@@ -10,6 +10,7 @@ namespace ConsoleApplication
             new One(System.IO.File.ReadAllText("../../input/DayOne.txt")).Output();
             new Two(System.IO.File.ReadAllText("../../input/DayTwo.txt")).Output();
             new Three(System.IO.File.ReadAllText("../../input/DayThree.txt")).Output();
+            new Four(System.IO.File.ReadAllText("../../input/DayFour.txt")).Output();
 
         }
     }
