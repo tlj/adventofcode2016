@@ -24,15 +24,11 @@ namespace Days
                         occurances.Add(line[i], 1);
                     }
                 }
-                var sortedOccurances = (from entry in occurances 
+                var sortedOccurances = from entry in occurances 
                     orderby entry.Value descending                     
-                    select entry).Take(1);
+                    select entry;
                 firstResult += sortedOccurances.First().Key;
-
-                var reverseSortedOccurances = (from entry in occurances 
-                    orderby entry.Value ascending                     
-                    select entry).Take(1);
-                secondResult += reverseSortedOccurances.First().Key;
+                secondResult += sortedOccurances.Last().Key;
             }
         }
     }
