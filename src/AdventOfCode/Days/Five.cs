@@ -16,22 +16,40 @@ namespace Days
         public override void Run()
         {
             firstResult = FindPassword(input).ToLower();
-            secondResult = FindSecondPassword(input).ToLower();
+//            secondResult = FindSecondPassword(input).ToLower();
         }
 
         public string FindPassword(string doorId)
         {
             string password = "";
+            char[] secondPassword = new char[8];
 
             int index = 0;
             string md5string = "";
-            while (password.Length < 8) {
+            int found = 0;
+            while (password.Length < 8 || found < 8) {
                 md5string = CalculateMd5(doorId + index.ToString());
-                if (md5string.Substring(0, 5) == "00000") {
-                    password += md5string.Substring(5, 1);
+                if (md5string != "" && md5string.Substring(0, 5) == "00000") {
+                    if (password.Length < 8) {
+                      password += md5string.Substring(5, 1);
+                    }
+                    int pos;
+                    if (int.TryParse(md5string.Substring(5,1), out pos)) {
+                      if (pos < 8 && secondPassword[pos] == '\0') {
+                        char passwordChar = md5string.Substring(6, 1)[0];
+                        secondPassword[pos] = passwordChar;
+                        found++;
+                      }
+                    }
                 }
                 index++;
             }
+            
+            firstResult = password;
+            foreach (var c in secondPassword) {
+              secondResult += c;
+            }
+            secondResult = secondResult.ToLower();
 
             return password;
         }
@@ -45,7 +63,7 @@ namespace Days
             string md5string = "";
             while (found < 8) {
                 md5string = CalculateMd5(doorId + index.ToString());
-                if (md5string.Substring(0, 5) == "00000") {
+                if (md5string != "" && md5string.Substring(0, 5) == "00000") {
                     try {
                         int pos = int.Parse(md5string.Substring(5, 1));
                         if (pos < 8 && password[pos] == '\0') {
@@ -74,7 +92,11 @@ namespace Days
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
             byte[] hash = md5.ComputeHash(inputBytes);
 
-            return BitConverter.ToString(hash).Replace("-", "");
+            if (hash[0] == 0 && hash[1] == 0 && (hash[2] & 0xf0) == 0) {
+              return BitConverter.ToString(hash).Replace("-", "");
+            } else {
+              return "";
+            }
         }
     }
 
