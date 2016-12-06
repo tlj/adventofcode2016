@@ -4,17 +4,19 @@ using System;
 
 namespace Days
 {
-
     public class Five : Base
     {
+        private MD5 md5;
+        
         public Five(string inputString) {
             input = inputString;
+            md5 = MD5.Create();
         }
 
         public override void Run()
         {
-            firstResult = FindPassword(input);
-            secondResult = FindSecondPassword(input);
+            firstResult = FindPassword(input).ToLower();
+            secondResult = FindSecondPassword(input).ToLower();
         }
 
         public string FindPassword(string doorId)
@@ -68,18 +70,11 @@ namespace Days
         }
 
         public string CalculateMd5(string input)
-        {
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
+        {            
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
             byte[] hash = md5.ComputeHash(inputBytes);
 
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
-
-            return sb.ToString().ToLower();
+            return BitConverter.ToString(hash).Replace("-", "");
         }
     }
 
