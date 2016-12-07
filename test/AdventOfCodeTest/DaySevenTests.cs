@@ -6,45 +6,40 @@ public class DaySevenTests
     [Fact]
     public void IsAbbaTest()
     {
-        var day = new Seven("");
-        Assert.True(day.IsAbba("abba"));
-        Assert.True(day.IsAbba("eweabbaasff"));
-        Assert.True(day.IsAbba("kjbddbksd"));
+        Assert.True(Seven.IsAbba("abba"));
+        Assert.True(Seven.IsAbba("eweabbaasff"));
+        Assert.True(Seven.IsAbba("kjbddbksd"));
     }
 
     [Fact]
     public void IsTlsTest()
     {
-        var day = new Seven("");
-        Assert.True(day.IsTls("abba[mnop]qrst"));
-        Assert.False(day.IsTls("abcd[bddb]xyyx"));
-        Assert.False(day.IsTls("aaaa[qwer]tyui"));
-        Assert.True(day.IsTls("ioxxoj[asdfgh]zxcvbn"));
-        Assert.True(day.IsTls("ipseqmdzbeeqjsnvo[qxgatjiqzhwulhgkjm]syofcufklnbeobppx[lbmkistwoiolecjh]qpznlrllrkhxrnyvf[zbhzvyjqzywdpvh]thlrfwmziexkhxgp"));
+        Assert.True(Seven.IsTls("abba[mnop]qrst"));
+        Assert.False(Seven.IsTls("abcd[bddb]xyyx"));
+        Assert.False(Seven.IsTls("aaaa[qwer]tyui"));
+        Assert.True(Seven.IsTls("ioxxoj[asdfgh]zxcvbn"));
+        Assert.True(Seven.IsTls("ipseqmdzbeeqjsnvo[qxgatjiqzhwulhgkjm]syofcufklnbeobppx[lbmkistwoiolecjh]qpznlrllrkhxrnyvf[zbhzvyjqzywdpvh]thlrfwmziexkhxgp"));
     }
 
     [Fact]
     public void IsSslTest()
     {
-        var day = new Seven("");
-        Assert.Equal(true, day.IsSsl("aba[bab]xyz"));
-        Assert.Equal(false, day.IsSsl("xyx[xyx]xyx"));
-        Assert.Equal(true, day.IsSsl("aaa[kek]eke"));
-        Assert.Equal(true, day.IsSsl("zazbz[bzb]cdb"));
+        Assert.True(Seven.IsSsl("aba[bab]xyz"));
+        Assert.False(Seven.IsSsl("xyx[xyx]xyx"));
+        Assert.True(Seven.IsSsl("aaa[kek]eke"));
+        Assert.True(Seven.IsSsl("zazbz[bzb]cdb"));
     }
 
     [Fact]
     public void FromAbaToBabTest()
     {
-        var day = new Seven("");
-        Assert.Equal("bab", day.FromAbaToBab("aba"));
+        Assert.Equal("bab", Seven.FromAbaToBab("aba"));
     }
 
     [Fact]
     public void GetAbaStringsTest()
     {
-        var day = new Seven("");
-        Assert.Equal(2, day.GetAbaStrings("zazbz").Count);
+        Assert.Equal(2, Seven.GetAbaStrings("zazbz").Count);
     }
 
     [Fact]

@@ -32,7 +32,7 @@ namespace Days
             secondResult = secondResultInt.ToString();
         }
 
-        public bool IsTls(string tlsString)
+        public static bool IsTls(string tlsString)
         {
             string pattern = @"(?<outside>[a-z]+)|(?<inside>\[[a-z]+\])";
             Regex rgx = new Regex(pattern);
@@ -48,7 +48,7 @@ namespace Days
             return found;
         }
 
-        public bool IsSsl(string sslString)
+        public static bool IsSsl(string sslString)
         {
             string splitHyperSuperPattern = @"(?<supernet>[a-z]+)|(?<hypernet>\[[a-z]+\])";
             Regex hyperSuperRegex = new Regex(splitHyperSuperPattern);
@@ -71,12 +71,12 @@ namespace Days
             return false;
         }
 
-        public String FromAbaToBab(string aba) 
+        public static String FromAbaToBab(string aba) 
         {
             return aba.Substring(1, 1) + aba.Substring(0, 1) + aba.Substring(1, 1);
         }
 
-        public List<String> GetAbaStrings(string inputString)
+        public static List<String> GetAbaStrings(string inputString)
         {
             var ret = new List<String>();
 
@@ -89,7 +89,7 @@ namespace Days
             return ret;
         }
 
-        public bool IsAbba(string abbaString)
+        public static bool IsAbba(string abbaString)
         {
             string pattern = @"(.)(?!\1)(.)\2\1";
             Regex rgx = new Regex(pattern);
