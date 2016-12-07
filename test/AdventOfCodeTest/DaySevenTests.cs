@@ -34,6 +34,20 @@ public class DaySevenTests
     }
 
     [Fact]
+    public void FromAbaToBabTest()
+    {
+        var day = new Seven("");
+        Assert.Equal("bab", day.FromAbaToBab("aba"));
+    }
+
+    [Fact]
+    public void GetAbaStringsTest()
+    {
+        var day = new Seven("");
+        Assert.Equal(2, day.GetAbaStrings("zazbz").Count);
+    }
+
+    [Fact]
     public void Example1Test()
     {
         var day = new Seven(@"abba[mnop]qrst
