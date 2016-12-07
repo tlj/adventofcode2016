@@ -12,6 +12,7 @@ public class DaySevenTests
         Assert.True(day.IsAbba("kjbddbksd"));
     }
 
+    [Fact]
     public void IsTlsTest()
     {
         var day = new Seven("");
@@ -20,18 +21,27 @@ public class DaySevenTests
         Assert.False(day.IsTls("aaaa[qwer]tyui"));
         Assert.True(day.IsTls("ioxxoj[asdfgh]zxcvbn"));
         Assert.True(day.IsTls("ipseqmdzbeeqjsnvo[qxgatjiqzhwulhgkjm]syofcufklnbeobppx[lbmkistwoiolecjh]qpznlrllrkhxrnyvf[zbhzvyjqzywdpvh]thlrfwmziexkhxgp"));
-
     }
 
+    [Fact]
+    public void IsSslTest()
+    {
+        var day = new Seven("");
+        Assert.Equal(true, day.IsSsl("aba[bab]xyz"));
+        Assert.Equal(false, day.IsSsl("xyx[xyx]xyx"));
+        Assert.Equal(true, day.IsSsl("aaa[kek]eke"));
+        Assert.Equal(true, day.IsSsl("zazbz[bzb]cdb"));
+    }
+
+    [Fact]
     public void Example1Test()
     {
         var day = new Seven(@"abba[mnop]qrst
 abcd[bddb]xyyx
 aaaa[qwer]tyui
-ioxxoj[asdfgh]zxcvbn
-ipseqmdzbeeqjsnvo[qxgatjiqzhwulhgkjm]syofcufklnbeobppx[lbmkistwoiolecjh]qpznlrllrkhxrnyvf[zbhzvyjqzywdpvh]thlrfwmziexkhxgp");
+ioxxoj[asdfgh]zxcvbn");
         day.Run();
-        Assert.Equal("3", day.GetFirstResult());        
+        Assert.Equal("2", day.GetFirstResult());        
     }
 
     [Fact]
@@ -43,7 +53,7 @@ ipseqmdzbeeqjsnvo[qxgatjiqzhwulhgkjm]syofcufklnbeobppx[lbmkistwoiolecjh]qpznlrll
         day.Run();
 
         Assert.Equal("118", day.GetFirstResult());
-        //Assert.Equal("548", day.GetSecondResult());
+        Assert.Equal("260", day.GetSecondResult());
     }
 
 }

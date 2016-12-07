@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Days
@@ -6,6 +7,7 @@ namespace Days
     public class Seven : Base
     {
         int firstResultInt = 0;
+        int secondResultInt = 0;
 
         public Seven(string inputString)
         {
@@ -21,9 +23,13 @@ namespace Days
                 if (IsTls(line)) {
                     firstResultInt++;
                 }
+                if (IsSsl(line)) {
+                    secondResultInt++;
+                }
             }
 
             firstResult = firstResultInt.ToString();
+            secondResult = secondResultInt.ToString();
         }
 
         public bool IsTls(string tlsString)
@@ -40,6 +46,47 @@ namespace Days
                 }            
             }
             return found;
+        }
+
+        public bool IsSsl(string sslString)
+        {
+            string splitHyperSuperPattern = @"(?<supernet>[a-z]+)|(?<hypernet>\[[a-z]+\])";
+            Regex hyperSuperRegex = new Regex(splitHyperSuperPattern);
+            MatchCollection matches = hyperSuperRegex.Matches(sslString);
+
+            var supernet = "";
+            var hypernet = ""; 
+
+            foreach (Match match in matches) {
+                supernet += match.Groups["supernet"].Value + " ";
+                hypernet += match.Groups["hypernet"].Value + " ";
+            }
+
+            foreach (var abaString in GetAbaStrings(supernet)) {
+                if (hypernet.Contains(FromAbaToBab(abaString))) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public String FromAbaToBab(string aba) 
+        {
+            return aba.Substring(1, 1) + aba.Substring(0, 1) + aba.Substring(1, 1);
+        }
+
+        public List<String> GetAbaStrings(string inputString)
+        {
+            var ret = new List<String>();
+
+            for (var i = 0; i < inputString.Length - 2; i++) {
+                if (inputString[i] == inputString[i + 2] && inputString[i] != inputString[i + 1]) {
+                    ret.Add(inputString.Substring(i, 3));
+                }
+            }
+
+            return ret;
         }
 
         public bool IsAbba(string abbaString)
