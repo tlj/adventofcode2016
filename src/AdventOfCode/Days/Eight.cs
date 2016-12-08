@@ -70,7 +70,7 @@ namespace Days
 
             for (var y = 0; y < ySize; y++) {
                 for (var x = 0; x < xSize; x++) {
-                    if (board[y, x] == '#') count++;
+                    if (board[y, x] == '█') count++;
                 }
             }
 
@@ -81,7 +81,7 @@ namespace Days
         {
             for (var y = 0; y < rectY; y++) {
                 for (var x = 0; x < rectX; x++) {
-                    board[y, x] = '#';
+                    board[y, x] = '█';
                 }
             }
         }
