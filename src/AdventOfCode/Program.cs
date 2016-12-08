@@ -16,6 +16,7 @@ namespace ConsoleApplication
             //new Seven(System.IO.File.ReadAllText("../../input/DaySeven.txt")).Output();
             var day = new Eight(System.IO.File.ReadAllText("../../input/DayEight.txt"));
             //day.Run();
+            day.EnableAnimation();
             day.Output();
             
             //day.DrawRect(3,2);

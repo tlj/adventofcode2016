@@ -10,6 +10,7 @@ namespace Days
         int xSize = 50;
         int ySize = 6;
         char[,] screenBuffer;
+        bool animate = false;
 
         public Eight(string inputString)
         {
@@ -17,6 +18,33 @@ namespace Days
             inputs = inputString.Split('\n');
             InitBoard();    
             screenBuffer = new char[ySize + 1, xSize + 1];        
+        }
+
+        public Eight(string inputString, int x, int y)
+        {
+            xSize = x;
+            ySize = y;
+
+            input = inputString;
+            inputs = inputString.Split('\n');
+            InitBoard();    
+            screenBuffer = new char[ySize + 1, xSize + 1];        
+        }
+
+        public char[,] GetBoard()
+        {
+            var retBoard = new char[ySize, xSize];
+            for (var y = 0; y < ySize; y++) {
+                for (var x = 0; x < xSize; x++) {
+                    retBoard[y, x] = board[y, x];
+                }
+            }
+            return retBoard;
+        }
+
+        public void EnableAnimation()
+        {
+            animate = true;
         }
 
         public override void Run()
@@ -64,13 +92,18 @@ namespace Days
             }
         }
 
+        public char GetLightOnChar()
+        {
+            return '█';
+        }
+
         public int CountLights()
         {
             var count = 0;
 
             for (var y = 0; y < ySize; y++) {
                 for (var x = 0; x < xSize; x++) {
-                    if (board[y, x] == '█') count++;
+                    if (board[y, x] == GetLightOnChar()) count++;
                 }
             }
 
@@ -81,7 +114,7 @@ namespace Days
         {
             for (var y = 0; y < rectY; y++) {
                 for (var x = 0; x < rectX; x++) {
-                    board[y, x] = '█';
+                    board[y, x] = GetLightOnChar();
                 }
             }
         }
@@ -100,7 +133,7 @@ namespace Days
         {
             for (var rb = 0; rb < rotateBy; rb++) {
                 RotateRow(rowNumber);
-                DrawBoard();
+                if (animate) DrawBoard();
             }
         }
 
@@ -118,7 +151,7 @@ namespace Days
         {
             for (var rb = 0; rb < rotateBy; rb++) {
                 RotateColumn(colNumber);
-                DrawBoard();
+                if (animate) DrawBoard();
             }
         }
 
@@ -133,7 +166,7 @@ namespace Days
                     }
                 }
             }
-            Thread.Sleep(20);
+            if (animate) Thread.Sleep(20);
         }
         
         public override void Output()
