@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Days
 {
@@ -8,12 +9,14 @@ namespace Days
         char[,] board;
         int xSize = 50;
         int ySize = 6;
+        char[,] screenBuffer;
 
         public Eight(string inputString)
         {
             input = inputString;
             inputs = inputString.Split('\n');
-            InitBoard();            
+            InitBoard();    
+            screenBuffer = new char[ySize + 1, xSize + 1];        
         }
 
         public override void Run()
@@ -46,6 +49,9 @@ namespace Days
                 }
             }
             firstResult = CountLights().ToString();
+
+            Console.SetCursorPosition(0, 8);
+            Console.WriteLine("");
         }
 
         public void InitBoard()
@@ -94,6 +100,7 @@ namespace Days
         {
             for (var rb = 0; rb < rotateBy; rb++) {
                 RotateRow(rowNumber);
+                DrawBoard();
             }
         }
 
@@ -111,6 +118,7 @@ namespace Days
         {
             for (var rb = 0; rb < rotateBy; rb++) {
                 RotateColumn(colNumber);
+                DrawBoard();
             }
         }
 
@@ -118,14 +126,20 @@ namespace Days
         {
             for (var y = 0; y < ySize; y++) {
                 for (var x = 0; x < xSize; x++) {
-                    Console.Write(board[y, x]);
+                    if (board[y, x] != screenBuffer[y, x]) {
+                        screenBuffer[y, x] = board[y, x];
+                        Console.SetCursorPosition(x, y);
+                        Console.Write(board[y, x]);
+                    }
                 }
-                Console.Write('\n');
             }
+            Thread.Sleep(20);
         }
-
+        
         public override void Output()
         {
+            Console.Clear();
+
             base.Output();
 
             DrawBoard();

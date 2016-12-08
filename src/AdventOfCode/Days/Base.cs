@@ -20,6 +20,7 @@ namespace Days
             if (!hasRun) {
                 Run();
             }
+
             Console.WriteLine("Day " + this.GetType().Name + ": First result: " + GetFirstResult());
             Console.WriteLine("Day " + this.GetType().Name + ": Second result: " + GetSecondResult());
             Console.WriteLine("");
