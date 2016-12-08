@@ -13,7 +13,15 @@ namespace ConsoleApplication
             //new Four(System.IO.File.ReadAllText("../../input/DayFour.txt")).Output();
             //new Five("abbhdwsy").Output();
             //new Six(System.IO.File.ReadAllText("../../input/DaySix.txt")).Output();
-            new Seven(System.IO.File.ReadAllText("../../input/DaySeven.txt")).Output();
+            //new Seven(System.IO.File.ReadAllText("../../input/DaySeven.txt")).Output();
+            new Eight(System.IO.File.ReadAllText("../../input/DayEight.txt")).Output();
+            //day.DrawRect(3,2);
+            //day.DrawBoard();
+            //day.RotateRowBy(1, 5);
+            //day.RotateColumnBy(2, 11);
+            //day.Output();
+            //day.DrawBoard();
+            //day.Output();
         }
     }
 

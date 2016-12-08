@@ -15,7 +15,7 @@ namespace Days
             hasRun = true;
         }
 
-        public void Output()
+        public virtual void Output()
         {
             if (!hasRun) {
                 Run();
