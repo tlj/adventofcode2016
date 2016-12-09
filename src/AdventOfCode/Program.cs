@@ -14,10 +14,10 @@ namespace ConsoleApplication
             //new Five("abbhdwsy").Output();
             //new Six(System.IO.File.ReadAllText("../../input/DaySix.txt")).Output();
             //new Seven(System.IO.File.ReadAllText("../../input/DaySeven.txt")).Output();
-            var day = new Eight(System.IO.File.ReadAllText("../../input/DayEight.txt"));
+            //var day = new Eight(System.IO.File.ReadAllText("../../input/DayEight.txt"));
             //day.Run();
-            day.EnableAnimation();
-            day.Output();
+            //day.EnableAnimation();
+            //day.Output();
             
             //day.DrawRect(3,2);
             //day.DrawBoard();
@@ -26,6 +26,8 @@ namespace ConsoleApplication
             //day.Output();
             //day.DrawBoard();
             //day.Output();
+
+            new Nine(System.IO.File.ReadAllText("../../input/DayNine.txt")).Output();
         }
     }
 
