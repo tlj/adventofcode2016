@@ -27,7 +27,8 @@ namespace ConsoleApplication
             //day.DrawBoard();
             //day.Output();
 
-            new Nine(System.IO.File.ReadAllText("../../input/DayNine.txt")).Output();
+            //new Nine(System.IO.File.ReadAllText("../../input/DayNine.txt")).Output();
+            new Ten(System.IO.File.ReadAllText("../../input/DayTen.txt")).Output();
         }
     }
 
