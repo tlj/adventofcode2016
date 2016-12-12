@@ -26,14 +26,24 @@ namespace Days
 
         private ulong checkedStates = 0;
         private int lowestCount = 1000000;
+        private long startedAt;
 
         private Queue<AShittyClass> possibleStates;
+        private List<string> seenStates;
 
         public Eleven(string inputString)
         {
             input = inputString;
             inputs = input.Split('\n');
             possibleStates = new Queue<AShittyClass>();
+            startedAt = UnixTimeNow();
+            seenStates = new List<string>();
+        }
+
+        private long UnixTimeNow()
+        {
+            var timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            return (long)timeSpan.TotalSeconds;
         }
 
         public static List<int[]> GetPairs(string[] inputs)
@@ -188,7 +198,7 @@ namespace Days
             if (sc.elevatorFloor < 0 || sc.elevatorFloor > 3) return false;
 
             if (checkedStates % 1000 == 0) {
-                Console.WriteLine("Checked " + checkedStates + " states.");
+                Console.WriteLine("Checked " + checkedStates + " states. " + Decimal.Divide(checkedStates, (UnixTimeNow() - startedAt) + 1) + " states/s");
             }
             int[] upDown = new int[2]{1,-1};
 
@@ -218,7 +228,14 @@ namespace Days
                         return true;
                     }
 
-                    possibleStates.Enqueue(new AShittyClass(newFloor, vs, sc.log.GetRange(0, sc.log.Count), sc.depth + 1));
+                    var normalized = Normalize(vs);
+                    if (!seenStates.Contains(normalized))
+                    {
+                        possibleStates.Enqueue(new AShittyClass(newFloor, vs, sc.log.GetRange(0, sc.log.Count), sc.depth + 1));
+                    } else
+                    {
+                        seenStates.Add(normalized);
+                    }
                 }
             }
             return false;
