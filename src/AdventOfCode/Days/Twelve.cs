@@ -11,12 +11,6 @@ namespace Days
         {
             input = inputString;
             inputs = input.Split('\n');
-            registers = new Dictionary<string, int>();
-        }
-
-        public int GetRegister(string register)
-        {
-            return registers[register];
         }
 
         public void Cpy(string valueOrRegister, string toRegister)
@@ -25,9 +19,7 @@ namespace Days
             bool cpyNumberIsNumeric;
             cpyNumberIsNumeric = int.TryParse(valueOrRegister, out cpyNumber);
 
-            if (!registers.ContainsKey(toRegister)) {
-                registers.Add(toRegister, 0);
-            }
+            ValidateRegister(toRegister);
             if (cpyNumberIsNumeric) {
                 registers[toRegister] = cpyNumber;
             } else {
@@ -37,17 +29,13 @@ namespace Days
 
         public void Inc(string register)
         {
-            if (!registers.ContainsKey(register)) {
-                registers.Add(register, 0);
-            }
+            ValidateRegister(register);
             registers[register]++;   
         }
 
         public void Dec(string register)
         {
-            if (!registers.ContainsKey(register)) {
-                registers.Add(register, 0);
-            }
+            ValidateRegister(register);
             registers[register]--;   
         }
 
@@ -57,9 +45,7 @@ namespace Days
             bool isNumeric;
             isNumeric = int.TryParse(condition, out number);
             if (!isNumeric) {
-                if (!registers.ContainsKey(condition)) {
-                    registers.Add(condition, 0);
-                }
+                ValidateRegister(condition);
                 number = registers[condition];
             } 
             
@@ -72,16 +58,31 @@ namespace Days
             return jumpSteps;
         }
 
+        public int GetRegister(string register)
+        {
+            return registers[register];
+        }
+
+        private void ValidateRegister(string register)
+        {
+            if (!registers.ContainsKey(register)) {
+                registers.Add(register, 0);
+            }
+        }
+
+
         public override void Run()
         {
             base.Run();
 
+            // First Part
+            registers = new Dictionary<string, int>();
             Execute();
             firstResult = registers["a"].ToString();
 
+            // Second Part
             registers = new Dictionary<string, int>();
             registers["c"] = 1;
-
             Execute();
             secondResult = registers["a"].ToString();
         }
