@@ -11,6 +11,7 @@ namespace Days
         {
             input = inputString;
             inputs = input.Split('\n');
+            InitRegisters();
         }
 
         public void Cpy(string valueOrRegister, string toRegister)
@@ -19,7 +20,6 @@ namespace Days
             bool cpyNumberIsNumeric;
             cpyNumberIsNumeric = int.TryParse(valueOrRegister, out cpyNumber);
 
-            ValidateRegister(toRegister);
             if (cpyNumberIsNumeric) {
                 registers[toRegister] = cpyNumber;
             } else {
@@ -29,13 +29,11 @@ namespace Days
 
         public void Inc(string register)
         {
-            ValidateRegister(register);
             registers[register]++;   
         }
 
         public void Dec(string register)
         {
-            ValidateRegister(register);
             registers[register]--;   
         }
 
@@ -45,7 +43,6 @@ namespace Days
             bool isNumeric;
             isNumeric = int.TryParse(condition, out number);
             if (!isNumeric) {
-                ValidateRegister(condition);
                 number = registers[condition];
             } 
             
@@ -62,28 +59,25 @@ namespace Days
             return registers[register];
         }
 
-        private void ValidateRegister(string register)
-        {
-            if (!registers.ContainsKey(register)) {
-                registers.Add(register, 0);
-            }
-        }
-
-
         public override void Run()
         {
             base.Run();
 
             // First Part
-            registers = new Dictionary<string, int>();
+            InitRegisters();
             Execute();
             firstResult = registers["a"].ToString();
 
             // Second Part
-            registers = new Dictionary<string, int>();
+            InitRegisters();
             registers["c"] = 1;
             Execute();
             secondResult = registers["a"].ToString();
+        }
+
+        public void InitRegisters()
+        {
+            registers = new Dictionary<string, int>(){ { "a", 0 }, { "b", 0 }, { "c", 0 }, { "d", 0 } };
         }
 
         public void Execute()
