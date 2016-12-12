@@ -51,8 +51,7 @@ namespace Days
             
             var jumpSteps = 0;
             if (number != 0) {
-                var jnz = int.Parse(steps);
-                jumpSteps = jnz;
+                jumpSteps = int.Parse(steps);
             }
 
             return jumpSteps;
