@@ -7,8 +7,8 @@ namespace Days
         private bool hasRun = false;
         protected string input;
         protected string[] inputs;
-        protected string firstResult;
-        protected string secondResult;
+        protected string firstResult = "";
+        protected string secondResult = "";
 
         public virtual void Run()
         {
