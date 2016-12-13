@@ -5,47 +5,48 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2016.Solutions
 {
-    public class PathState
-    {
-        private int d;
-        private int[] coordinates;
-
-        public PathState(int x, int y, int depth)
-        {
-            coordinates = new int[2] { x, y };
-            d = depth;
-        }
-
-        public string Normalize()
-        {
-            return coordinates[0] + "x" + coordinates[1];
-        }
-
-        public int X()
-        {
-            return coordinates[0];
-        }
-
-        public int Y()
-        {
-            return coordinates[1];
-        }
-
-        public int Depth()
-        {
-            return d;
-        }
-
-        public bool Valid()
-        {
-            return (X() >= 0 && X() < 100 && Y() >= 0 && Y() < 100);
-        }
-    }
 
     public class Day13 : Base
     {
+        public class State
+        {
+            private int d;
+            private int[] coordinates;
+
+            public State(int x, int y, int depth)
+            {
+                coordinates = new int[2] { x, y };
+                d = depth;
+            }
+
+            public string Normalize()
+            {
+                return coordinates[0] + "x" + coordinates[1];
+            }
+
+            public int X()
+            {
+                return coordinates[0];
+            }
+
+            public int Y()
+            {
+                return coordinates[1];
+            }
+
+            public int Depth()
+            {
+                return d;
+            }
+
+            public bool Valid()
+            {
+                return (X() >= 0 && X() < 100 && Y() >= 0 && Y() < 100);
+            }
+        }
+
         private int favoriteNumber;
-        private Queue<PathState> possiblePaths;
+        private Queue<State> possiblePaths;
         private Dictionary<string, int> pathsDiscovered;
         private int lessThanFifty = 0;
 
@@ -72,7 +73,7 @@ namespace AdventOfCode2016.Solutions
         {
             favoriteNumber = int.Parse(input);
             pathsDiscovered = new Dictionary<string, int>();
-            possiblePaths = new Queue<PathState>();
+            possiblePaths = new Queue<State>();
         }
 
         public static bool IsOpen(int x, int y, int favoriteNumber)
@@ -92,7 +93,7 @@ namespace AdventOfCode2016.Solutions
             return (countOnes & 1) == 0;
         }
 
-        public List<int[]> FindPossiblePaths(PathState startState)
+        public List<int[]> FindPossiblePaths(State startState)
         {
             if (startState.X() == 31 && startState.Y() == 39)
             {
@@ -105,16 +106,16 @@ namespace AdventOfCode2016.Solutions
 
             var ret = new List<int[]>();
             var directions = new int[2] { 1, -1 };
-            PathState state;
+            State state;
             foreach (var dir in directions)
             {
-                state = new PathState(startState.X() + dir, startState.Y(), startState.Depth() + 1);
+                state = new State(startState.X() + dir, startState.Y(), startState.Depth() + 1);
                 if (state.Valid() && IsOpen(state.X(), state.Y(), favoriteNumber) && !pathsDiscovered.ContainsKey(state.Normalize()))
                 {
                     possiblePaths.Enqueue(state);
                     pathsDiscovered.Add(state.Normalize(), 0);
                 }
-                state = new PathState(startState.X(), startState.Y() + dir, startState.Depth() + 1);
+                state = new State(startState.X(), startState.Y() + dir, startState.Depth() + 1);
                 if (state.Valid() && IsOpen(state.X(), state.Y(), favoriteNumber) && !pathsDiscovered.ContainsKey(state.Normalize()))
                 {
                     possiblePaths.Enqueue(state);
@@ -130,7 +131,7 @@ namespace AdventOfCode2016.Solutions
 
             int xs = 1;
             int ys = 1;
-            PathState initialState = new Solutions.PathState(xs, ys, 0);
+            State initialState = new State(xs, ys, 0);
 
             FindPossiblePaths(initialState);
             pathsDiscovered.Add(initialState.Normalize(), 0);

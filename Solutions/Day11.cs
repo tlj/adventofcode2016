@@ -5,24 +5,24 @@ using System;
 
 namespace AdventOfCode2016.Solutions
 {
-    public class State
-    {
-        public int elevatorFloor;
-        public List<int[]> pairs;
-        public List<string> log;
-        public int depth;
-
-        public State(int e, List<int[]> p, List<string> l, int d)
-        {
-            elevatorFloor = e;
-            pairs = p;
-            depth = d;
-            log = l;
-        }
-    }
-
     public class Day11 : Base
     {
+
+        public class State
+        {
+            public int elevatorFloor;
+            public List<int[]> pairs;
+            public List<string> log;
+            public int depth;
+
+            public State(int e, List<int[]> p, List<string> l, int d)
+            {
+                elevatorFloor = e;
+                pairs = p;
+                depth = d;
+                log = l;
+            }
+        }
 
         private ulong checkedStates = 0;
         private int lowestCount = 1000000;
