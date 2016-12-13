@@ -7,7 +7,7 @@ namespace ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            new Twelve(System.IO.File.ReadAllText("../../input/DayTwelve.txt")).Output();
+            new Eleven(System.IO.File.ReadAllText("../../input/DayEleven.txt")).Output();
         }
     }
 
