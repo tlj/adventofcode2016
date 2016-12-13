@@ -58,6 +58,42 @@ namespace AdventOfCode2016
                 case "day13":
                     new Day13(isTest).Output();
                     break;
+                case "day14":
+                    new Day14(isTest).Output();
+                    break;
+                case "day15":
+                    new Day15(isTest).Output();
+                    break;
+                case "day16":
+                    new Day16(isTest).Output();
+                    break;
+                case "day17":
+                    new Day17(isTest).Output();
+                    break;
+                case "day18":
+                    new Day18(isTest).Output();
+                    break;
+                case "day19":
+                    new Day19(isTest).Output();
+                    break;
+                case "day20":
+                    new Day20(isTest).Output();
+                    break;
+                case "day21":
+                    new Day21(isTest).Output();
+                    break;
+                case "day22":
+                    new Day22(isTest).Output();
+                    break;
+                case "day23":
+                    new Day23(isTest).Output();
+                    break;
+                case "day24":
+                    new Day24(isTest).Output();
+                    break;
+                case "day25":
+                    new Day25(isTest).Output();
+                    break;
                 default:
                     Console.WriteLine("Invalid day.");
                     break;
