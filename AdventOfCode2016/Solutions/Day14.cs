@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using AdventOfCode2016.Utils;
 
 namespace AdventOfCode2016.Solutions
 {
@@ -27,7 +27,7 @@ namespace AdventOfCode2016.Solutions
 
         public static int GenerateKey(string inputString, int keyNumber, int keyStretchingCount)
         {
-            var md5 = MD5.Create();
+            var md5 = System.Security.Cryptography.MD5.Create();
             var threePattern = @"(.)\1\1";
             var fivePattern = @"(.)\1\1\1\1";
 
@@ -39,10 +39,10 @@ namespace AdventOfCode2016.Solutions
             var triples = new Dictionary<int, string>();
             while (foundKeys.Count < keyNumber || (foundKeys.Count > keyNumber - 1 && index < foundKeys[keyNumber - 1] + 1000))
             {
-                var md5string = Util.CalculateMd5(inputString + index.ToString(), md5);
+                var md5string = MD5.CalculateMd5(inputString + index.ToString(), md5);
                 for (var j = 0; j < keyStretchingCount; j++)
                 {
-                    md5string = Util.CalculateMd5(md5string.ToLower(), md5);
+                    md5string = MD5.CalculateMd5(md5string.ToLower(), md5);
                 }
                 Match fiveMatch = fiveRgx.Match(md5string);
                 if (fiveMatch.Success)
