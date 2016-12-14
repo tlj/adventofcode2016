@@ -3,7 +3,7 @@ using AdventOfCode2016.Solutions;
 
 namespace AdventOfCode2016.Tests
 {
-    public class DayTwelveTest
+    public class Day12Test
     {
         [Fact]
         public void SomeTest()

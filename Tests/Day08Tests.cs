@@ -3,7 +3,7 @@ using AdventOfCode2016.Solutions;
 
 namespace AdventOfCode2016.Tests
 {
-    public class DayEightTests
+    public class Day08Tests
     {
         [Fact]
         public void DrawRectTest()

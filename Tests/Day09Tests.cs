@@ -4,7 +4,7 @@ using AdventOfCode2016.Solutions;
 namespace AdventOfCode2016.Tests
 {
 
-    public class DayNineTests
+    public class Day09Tests
     {
         [Fact]
         public void Version1Tests()

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace AdventOfCode2016.Tests
 {
 
-    public class DayElevenTests
+    public class Day11Tests
     {
         [Fact]
         public void IsValidTests()
