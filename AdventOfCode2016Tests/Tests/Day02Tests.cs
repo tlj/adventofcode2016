@@ -1,7 +1,7 @@
 using AdventOfCode2016.Solutions;
 using Xunit;
 
-namespace AdventOfCode2016.Tests
+namespace AdventOfCode2016Tests
 {
 
     public class Day02Tests
@@ -9,7 +9,7 @@ namespace AdventOfCode2016.Tests
         [Fact]
         public void Example1Test()
         {
-            string input = Inputs.Day02.testData;
+            string input = AdventOfCode2016.Inputs.Day02.testData;
 
             var day = new Day02(input);
             day.Run();
@@ -24,7 +24,7 @@ namespace AdventOfCode2016.Tests
         [Fact]
         public void RealDataTest()
         {
-            string input = Inputs.Day02.realData;
+            string input = AdventOfCode2016.Inputs.Day02.realData;
             string expected = "53255";
 
             var day = new Day02(input);
@@ -43,7 +43,7 @@ namespace AdventOfCode2016.Tests
         [Fact]
         public void Example1SecondResultTest()
         {
-            string input = Inputs.Day02.testData;
+            string input = AdventOfCode2016.Inputs.Day02.testData;
 
             var day = new Day02(input);
             day.Run();

@@ -1,7 +1,7 @@
 using AdventOfCode2016.Solutions;
 using Xunit;
 
-namespace AdventOfCode2016.Tests
+namespace AdventOfCode2016Tests
 {
     public class Day01Tests
     {
@@ -92,7 +92,7 @@ namespace AdventOfCode2016.Tests
         [Fact]
         public void RealDataDistanceTest()
         {
-            string input = Inputs.Day01.realData;
+            string input = AdventOfCode2016.Inputs.Day01.realData;
             string expected = "288";
 
             var dayOne = new Day01(input);

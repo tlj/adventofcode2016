@@ -2,7 +2,7 @@ using Xunit;
 using AdventOfCode2016.Solutions;
 using System.Collections.Generic;
 
-namespace AdventOfCode2016.Tests
+namespace AdventOfCode2016Tests
 {
 
     public class Day11Tests

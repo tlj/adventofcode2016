@@ -1,7 +1,7 @@
 using Xunit;
 using AdventOfCode2016.Solutions;
 
-namespace AdventOfCode2016.Tests
+namespace AdventOfCode2016Tests
 {
     public class Day08Tests
     {
@@ -81,7 +81,7 @@ namespace AdventOfCode2016.Tests
         [Fact]
         public void RealDataTest()
         {
-            string input = Inputs.Day08.realData;
+            string input = AdventOfCode2016.Inputs.Day08.realData;
 
             var day = new Day08(input);
             day.Run();

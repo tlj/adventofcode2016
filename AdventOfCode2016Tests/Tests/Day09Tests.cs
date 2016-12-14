@@ -1,7 +1,7 @@
 using Xunit;
 using AdventOfCode2016.Solutions;
 
-namespace AdventOfCode2016.Tests
+namespace AdventOfCode2016Tests
 {
 
     public class Day09Tests
