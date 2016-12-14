@@ -38,7 +38,7 @@ namespace AdventOfCode2016.Solutions
             int index = 0;
             string md5string = "";
             while (password.Length < 8) {
-                md5string = CalculateMd5(doorId + index.ToString());
+                md5string = Util.CalculateMd5(doorId + index.ToString(), md5);
                 if (md5string.Substring(0, 5) == "00000") {
                     password += md5string.Substring(5, 1);
                 }
@@ -56,7 +56,7 @@ namespace AdventOfCode2016.Solutions
             int found = 0;
             string md5string = "";
             while (found < 8) {
-                md5string = CalculateMd5(doorId + index.ToString());
+                md5string = Util.CalculateMd5(doorId + index.ToString(), md5);
                 if (md5string.Substring(0, 5) == "00000") {
                     try {
                         int pos = int.Parse(md5string.Substring(5, 1));
@@ -79,14 +79,6 @@ namespace AdventOfCode2016.Solutions
             }
 
             return retPassword;            
-        }
-
-        public string CalculateMd5(string input)
-        {            
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-            return BitConverter.ToString(hash).Replace("-", "");
         }
     }
 

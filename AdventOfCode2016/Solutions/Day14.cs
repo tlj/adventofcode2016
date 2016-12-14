@@ -39,10 +39,10 @@ namespace AdventOfCode2016.Solutions
             var triples = new Dictionary<int, string>();
             while (foundKeys.Count < keyNumber || (foundKeys.Count > keyNumber - 1 && index < foundKeys[keyNumber - 1] + 1000))
             {
-                var md5string = CalculateMd5(inputString + index.ToString(), md5);
+                var md5string = Util.CalculateMd5(inputString + index.ToString(), md5);
                 for (var j = 0; j < keyStretchingCount; j++)
                 {
-                    md5string = CalculateMd5(md5string.ToLower(), md5);
+                    md5string = Util.CalculateMd5(md5string.ToLower(), md5);
                 }
                 Match fiveMatch = fiveRgx.Match(md5string);
                 if (fiveMatch.Success)
@@ -78,14 +78,6 @@ namespace AdventOfCode2016.Solutions
 
             firstResult = GenerateKey(input, 64, 0).ToString();
             secondResult = GenerateKey(input, 64, 2016).ToString();
-        }
-
-        public static string CalculateMd5(string input, MD5 md5)
-        {
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-            return BitConverter.ToString(hash).Replace("-", "");
         }
     }
 }
