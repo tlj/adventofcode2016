@@ -7,12 +7,10 @@ namespace AdventOfCode2016.Solutions
 {
     public class Day14 : Base
     {
-        private MD5 md5;
 
         public Day14(string dayInput)
         {
             Init(dayInput);
-            md5 = MD5.Create();
         }
 
         public Day14(bool isTest)
@@ -25,11 +23,11 @@ namespace AdventOfCode2016.Solutions
             {
                 Init(Inputs.Day14.realData);
             }
-            md5 = MD5.Create();
         }
 
-        public string GenerateKey(string inputString, int keyNumber, int keyStretchingCount)
+        public static int GenerateKey(string inputString, int keyNumber, int keyStretchingCount)
         {
+            var md5 = MD5.Create();
             var threePattern = @"(.)\1\1";
             var fivePattern = @"(.)\1\1\1\1";
 
@@ -39,12 +37,12 @@ namespace AdventOfCode2016.Solutions
             var index = 0;
             var foundKeys = new List<int>();
             var triples = new Dictionary<int, string>();
-            while (foundKeys.Count < keyNumber || (foundKeys.Count > keyNumber - 1 && index < foundKeys[63] + 1000))
+            while (foundKeys.Count < keyNumber || (foundKeys.Count > keyNumber - 1 && index < foundKeys[keyNumber - 1] + 1000))
             {
-                var md5string = CalculateMd5(input + index.ToString()).ToLower();
+                var md5string = CalculateMd5(inputString + index.ToString(), md5);
                 for (var j = 0; j < keyStretchingCount; j++)
                 {
-                    md5string = CalculateMd5(md5string.ToLower());
+                    md5string = CalculateMd5(md5string.ToLower(), md5);
                 }
                 Match fiveMatch = fiveRgx.Match(md5string);
                 if (fiveMatch.Success)
@@ -71,18 +69,18 @@ namespace AdventOfCode2016.Solutions
                 foundKeys.Sort();
                 index++;
             }
-            return foundKeys[keyNumber - 1].ToString();
+            return foundKeys[keyNumber - 1];
         }
 
         public override void Run()
         {
             base.Run();
 
-            firstResult = GenerateKey(input, 64, 0);
-            secondResult = GenerateKey(input, 64, 2016);
+            firstResult = GenerateKey(input, 64, 0).ToString();
+            secondResult = GenerateKey(input, 64, 2016).ToString();
         }
 
-        public string CalculateMd5(string input)
+        public static string CalculateMd5(string input, MD5 md5)
         {
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
             byte[] hash = md5.ComputeHash(inputBytes);
