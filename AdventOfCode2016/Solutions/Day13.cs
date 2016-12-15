@@ -1,54 +1,15 @@
-﻿using System;
+﻿using AdventOfCode2016.Utils;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
+using static AdventOfCode2016.Utils.Astar;
 
 namespace AdventOfCode2016.Solutions
 {
 
     public class Day13 : Base
     {
-        public class State
-        {
-            private int d;
-            private int[] coordinates;
-
-            public State(int x, int y, int depth)
-            {
-                coordinates = new int[2] { x, y };
-                d = depth;
-            }
-
-            public string Normalize()
-            {
-                return coordinates[0] + "x" + coordinates[1];
-            }
-
-            public int X()
-            {
-                return coordinates[0];
-            }
-
-            public int Y()
-            {
-                return coordinates[1];
-            }
-
-            public int Depth()
-            {
-                return d;
-            }
-
-            public bool Valid()
-            {
-                return (X() >= 0 && X() < 100 && Y() >= 0 && Y() < 100);
-            }
-        }
-
         private int favoriteNumber;
-        private Queue<State> possiblePaths;
-        private Dictionary<string, int> pathsDiscovered;
-        private int lessThanFifty = 0;
 
         public Day13(string inputString)
         {
@@ -72,8 +33,35 @@ namespace AdventOfCode2016.Solutions
         private void Setup()
         {
             favoriteNumber = int.Parse(input);
-            pathsDiscovered = new Dictionary<string, int>();
-            possiblePaths = new Queue<State>();
+        }
+
+        public override void Run()
+        {
+            base.Run();
+
+            var map = GenerateMap(45, 45);
+            var astar = new Astar(map);
+            var path = astar.GetPathFromTo(map[1, 1], map[39, 31]);
+            firstResult = path.Cost.ToString();
+
+            var fiftyLocations = 0;
+
+            // lol, this is butt ugly but a consequence of astaring it.
+            var secondAstar = new Astar(map);
+            for (var y = 0; y < map.GetLength(0); y++)
+            {
+                for (var x = 0; x < map.GetLength(1); x++)
+                {
+                    if (map[y, x].IsOpen)
+                    {
+                        var p = secondAstar.GetPathFromTo(map[1, 1], map[y, x]);
+                        if (p != null && p.Cost <= 50) fiftyLocations++;
+                    }
+                }
+            }
+            secondResult = fiftyLocations.ToString();
+
+            Animate(map, path, astar);
         }
 
         public static bool IsOpen(int x, int y, int favoriteNumber)
@@ -93,55 +81,58 @@ namespace AdventOfCode2016.Solutions
             return (countOnes & 1) == 0;
         }
 
-        public List<int[]> FindPossiblePaths(State startState)
+        public MapSquare[,] GenerateMap(int sizeX, int sizeY)
         {
-            if (startState.X() == 31 && startState.Y() == 39)
+            MapSquare[,] map = new MapSquare[sizeY, sizeX];
+            for (var y = 0; y < map.GetLength(0); y++)
             {
-                firstResult = startState.Depth().ToString();
-            }
-            if (startState.Depth() <= 50)
-            {
-                lessThanFifty++;
-            }
-
-            var ret = new List<int[]>();
-            var directions = new int[2] { 1, -1 };
-            State state;
-            foreach (var dir in directions)
-            {
-                state = new State(startState.X() + dir, startState.Y(), startState.Depth() + 1);
-                if (state.Valid() && IsOpen(state.X(), state.Y(), favoriteNumber) && !pathsDiscovered.ContainsKey(state.Normalize()))
+                for (var x = 0; x < map.GetLength(1); x++)
                 {
-                    possiblePaths.Enqueue(state);
-                    pathsDiscovered.Add(state.Normalize(), 0);
-                }
-                state = new State(startState.X(), startState.Y() + dir, startState.Depth() + 1);
-                if (state.Valid() && IsOpen(state.X(), state.Y(), favoriteNumber) && !pathsDiscovered.ContainsKey(state.Normalize()))
-                {
-                    possiblePaths.Enqueue(state);
-                    pathsDiscovered.Add(state.Normalize(), 0);
+                    map[y, x] = new MapSquare(x, y, 1, IsOpen(x, y, favoriteNumber));
                 }
             }
-            return ret;
+            return map;
         }
 
-        public override void Run()
+        public void Animate(MapSquare[,] map, Path path, Astar astar)
         {
-            base.Run();
-
-            int xs = 1;
-            int ys = 1;
-            State initialState = new State(xs, ys, 0);
-
-            FindPossiblePaths(initialState);
-            pathsDiscovered.Add(initialState.Normalize(), 0);
-
-            while (possiblePaths.Count > 0)
+            var successFullSquares = new List<MapSquare>();
+            while (path != null)
             {
-                FindPossiblePaths(possiblePaths.Dequeue());
+                successFullSquares.Add(path.CurrentSquare);
+                path = path.ParentPath;
+            }
+            successFullSquares.Reverse();
+
+            Console.Clear();
+            for (var y = 0; y < map.GetLength(0); y++)
+            {
+                for (var x = 0; x < map.GetLength(1); x++)
+                {
+                    Console.SetCursorPosition(x, y);
+                    if (!map[y, x].IsOpen)
+                    {
+                        Console.Write('#');
+                    }
+                }
             }
 
-            secondResult = lessThanFifty.ToString();
+            foreach (var considered in astar.SquaresConsidered)
+            {
+                Console.SetCursorPosition(considered.X, considered.Y);
+                if (successFullSquares.Contains(considered))
+                {
+                    Console.Write('O');
+                }
+                else
+                {
+                    Console.Write('.');
+                }
+                Thread.Sleep(10);
+            }
+
+            Console.SetCursorPosition(0, 52);
         }
+
     }
 }
