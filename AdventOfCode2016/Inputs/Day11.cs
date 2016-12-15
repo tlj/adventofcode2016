@@ -15,5 +15,9 @@ The fourth floor contains nothing relevant.";
 The second floor contains a plutonium-compatible microchip and a strontium-compatible microchip.
 The third floor contains a promethium generator, a promethium-compatible microchip, a ruthenium generator, and a ruthenium-compatible microchip.
 The fourth floor contains nothing relevant.";
+        public static string realDataPart2 = @"The first floor contains a thulium generator, a thulium-compatible microchip, a plutonium generator, and a strontium generator, An elerium generator. An elerium-compatible microchip. A dilithium generator. A dilithium-compatible microchip.
+The second floor contains a plutonium-compatible microchip and a strontium-compatible microchip.
+The third floor contains a promethium generator, a promethium-compatible microchip, a ruthenium generator, and a ruthenium-compatible microchip.
+The fourth floor contains nothing relevant.";
     }
 }
