@@ -25,7 +25,7 @@ namespace AdventOfCode2016.Solutions
         }
 
         private ulong checkedStates = 0;
-        private int lowestCount = 1000000;
+        private int lowestCount = -1;
         private long startedAt;
 
         private Queue<State> possibleStates;
@@ -121,11 +121,13 @@ namespace AdventOfCode2016.Solutions
 
         private static string Normalize(List<int[]> pairs) 
         {
-            var res = "";
+            var ret = new List<string>();
             foreach (var p in pairs) {
-                res += " " + String.Join(",", p);
+                ret.Add(p[0] + "G");
+                ret.Add(p[1] + "M");
             }
-            return res;
+            ret.Sort();
+            return String.Join("", ret);
         }
 
         private List<int[]> ClonePairs(List<int[]> pairs)
@@ -214,9 +216,6 @@ namespace AdventOfCode2016.Solutions
         {
             if (sc.elevatorFloor < 0 || sc.elevatorFloor > 3) return false;
 
-            if (checkedStates % 100000 == 0) {
-                Console.WriteLine("Checked " + checkedStates + " states. " + Decimal.Divide(checkedStates, (UnixTimeNow() - startedAt) + 1) + " states/s");
-            }
             int[] upDown = new int[2]{1,-1};
 
             foreach (var elevatorChange in upDown) {
@@ -229,12 +228,12 @@ namespace AdventOfCode2016.Solutions
                 foreach (var vs in validStates) {
                     var normalized = Normalize(vs);
                     if (IsSolved(vs)) {
-                        if (sc.depth <= lowestCount) {
+                        if (lowestCount == -1 || sc.depth <= lowestCount) {
                             lowestCount = sc.depth;
                             foreach (var l in sc.log) {
-                                Console.WriteLine(l);
+                                //Console.WriteLine(l);
                             }
-                            Console.WriteLine(normalized);
+                            //Console.WriteLine(normalized);
                         }
                         return true;
                     }
@@ -255,12 +254,22 @@ namespace AdventOfCode2016.Solutions
         {
             var pairs = GetPairs(inputs);
             Solve(new State(0, pairs, new List<string>(), 1));
-
-            while (possibleStates.Count > 0 && !Solve(possibleStates.Dequeue())) {
-                
-            }
+            while (possibleStates.Count > 0 && !Solve(possibleStates.Dequeue())) {}
             firstResult = lowestCount.ToString();
-            //Console.WriteLine("Checked " + checkedStates + " states.");
+            Console.WriteLine("Checked states for part 1: " + checkedStates);
+
+            // part 2
+            lowestCount = -1;
+            possibleStates = new Queue<State>();
+            checkedStates = 0;
+
+            var pairsTwo = GetPairs(Inputs.Day11.realDataPart2.Split('\n'));
+            Solve(new State(0, pairsTwo, new List<string>(), 1));
+            while (possibleStates.Count > 0 && !Solve(possibleStates.Dequeue())) {}
+            secondResult = lowestCount.ToString();
+            Console.WriteLine("Checked states for part 2: " + checkedStates);
+
+            Console.WriteLine();
         }
 
         private static void DumpPairs(List<int[]> pairs)
