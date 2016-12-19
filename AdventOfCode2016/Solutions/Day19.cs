@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode2016.Solutions
 {
@@ -26,21 +27,21 @@ namespace AdventOfCode2016.Solutions
         public static int GetNextElf(int currentElf, int elfCount)
         {
             var elf = currentElf + 1;
-            if (elf > elfCount) {
-                elf = 1;
+            if (elf >= elfCount) {
+                elf = 0;
             }
             return elf;
         }
 
         public static int GetElfWithPresentPart1(int elfCount)
         {
-            var elfs = new Dictionary<int, int>();
-            for (var i = 1; i <= elfCount; i++) {
-                elfs.Add(i, 1);
+            var elfs = new int[elfCount];
+            for (var i = 0; i < elfCount; i++) {
+                elfs[i] = 1;
             }
             var end = false;
             while (!end) {
-                for (var i = 1; i <= elfCount; i++) {
+                for (var i = 0; i < elfCount; i++) {
                     if (elfs[i] == 0) continue;
                     var nextElf = GetNextElf(i, elfCount);
                     while (nextElf != i) {
@@ -57,12 +58,37 @@ namespace AdventOfCode2016.Solutions
                 }
             }
 
-            foreach (var elf in elfs) {
-                if (elf.Value > 0) {
-                    return elf.Key;
-                }
+            for (var i = 0; i < elfs.Length; i++) {
+                if (elfs[i] > 0) return i + 1;
             }
             return 0;
+        }
+
+        public static int GetElfWithPresentPart2(int elfCount)
+        {
+            var elfs = new List<int>();
+            for (var i = 0; i < elfCount; i++) {
+                elfs.Add(i + 1);
+            }
+
+            while (elfs.Count > 1) {
+                for (var i = 0; i < elfs.Count; i++) {
+                    int elfAcross = i + (int)Math.Floor((decimal)(elfs.Count / 2));
+                    if (elfAcross >= elfs.Count) {
+                        elfAcross = elfAcross - elfs.Count;
+                    }
+
+                    elfs.RemoveAt(elfAcross);
+                    if (elfAcross < i) {
+                        i--;
+                    }
+
+                    if (elfs.Count % 10000 == 0) {
+                        Console.WriteLine(elfs.Count);
+                    }
+                }
+            }
+            return elfs[0];
         }
 
         public override void Run()
@@ -70,6 +96,7 @@ namespace AdventOfCode2016.Solutions
             base.Run();
 
             firstResult = GetElfWithPresentPart1(int.Parse(input)).ToString();
+            secondResult = GetElfWithPresentPart2(int.Parse(input)).ToString();
         }
     }
 }
