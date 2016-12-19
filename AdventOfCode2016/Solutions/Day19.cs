@@ -64,31 +64,52 @@ namespace AdventOfCode2016.Solutions
             return 0;
         }
 
-        public static int GetElfWithPresentPart2(int elfCount)
+        public class Elf
         {
-            var elfs = new List<int>();
-            for (var i = 0; i < elfCount; i++) {
-                elfs.Add(i + 1);
-            }
+            public int Number { get; set; }
+            public int Presents { get; set; }
+            public Elf Next { get; set; }
+            public Elf Previous { get; set; }
+        }
 
-            while (elfs.Count > 1) {
-                for (var i = 0; i < elfs.Count; i++) {
-                    int elfAcross = i + (int)Math.Floor((decimal)(elfs.Count / 2));
-                    if (elfAcross >= elfs.Count) {
-                        elfAcross = elfAcross - elfs.Count;
-                    }
+        public int GetElfWithPresentsPart2(int elfCount)
+        {
+            Elf first = new Elf { Number = 1 };
+            Elf across = null;
 
-                    elfs.RemoveAt(elfAcross);
-                    if (elfAcross < i) {
-                        i--;
-                    }
-
-                    if (elfs.Count % 10000 == 0) {
-                        Console.WriteLine(elfs.Count);
-                    }
+            var elf = first;
+            for (var i = 1; i <= elfCount; i++) {
+                if (i == elfCount) {
+                    // Last elf must link to the first elf
+                    elf.Next = first;
+                } else {
+                    // Create a new elf as the next one
+                    elf.Next = new Elf { Number = i + 1, Previous = elf };
                 }
+                elf = elf.Next;  
+                if (i == Math.Floor((decimal)(elfCount / 2))) {
+                    // this is the elf across from the first elf
+                    across = elf;
+                }      
             }
-            return elfs[0];
+            // First elf needs to link back to the last elf
+            first.Previous = elf;
+
+            int count = elfCount;
+            while (elf.Next != elf) {
+                // for the elf across, link the previous elf to the elf next to the one across
+                across.Previous.Next = across.Next;
+                // for the elf across, link the next elf to the elf before the one across, obliterating the 
+                // one across from the ring, since no elf links to it anymore.
+                across.Next.Previous = across.Previous;
+
+                // update the across-elf
+                across = (--count % 2) == 1 ? across.Next.Next : across.Next;
+
+                elf = elf.Next;
+            }
+
+            return elf.Number;
         }
 
         public override void Run()
@@ -96,7 +117,7 @@ namespace AdventOfCode2016.Solutions
             base.Run();
 
             firstResult = GetElfWithPresentPart1(int.Parse(input)).ToString();
-            secondResult = GetElfWithPresentPart2(int.Parse(input)).ToString();
+            secondResult = GetElfWithPresentsPart2(int.Parse(input)).ToString();
         }
     }
 }
