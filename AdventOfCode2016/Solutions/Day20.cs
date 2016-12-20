@@ -44,21 +44,8 @@ namespace AdventOfCode2016.Solutions
             return highLow.ToString();
         }
 
-        public class SortNumeric : IComparable<uint[]>
+        public string Part2()
         {
-            public int CompareTo(uint[] comparePart)
-            {
-                
-                return 0;
-            }
-        }
-
-        public override void Run()
-        {
-            base.Run();
-
-            firstResult = Part1();
-
             var listInputs = new List<uint[]>();
             foreach (var l in inputs)
             {
@@ -70,21 +57,30 @@ namespace AdventOfCode2016.Solutions
                 return x[0].CompareTo(y[0]);
             });
 
-            var allowed = uint.MaxValue;
+            var allowed = uint.MinValue;
             uint lastEnd = 0;
 
             foreach (var l in listInputs)
             {
-                if (l[0] > lastEnd || allowed == uint.MaxValue)
-                {
-                    allowed -= (l[1] - l[0]);
-                } else if (lastEnd > l[0])
-                {
-                    allowed -= (l[1] - l[0]) + (lastEnd - l[0]);
+                if (l[0] > lastEnd && lastEnd > 0) {
+                    allowed += l[0] - lastEnd - 1;
+                }
+                if (l[1] > lastEnd) {
+                    lastEnd = l[1];
                 }
             }
 
-            secondResult = allowed.ToString();           
+            allowed = allowed + (uint.MaxValue - lastEnd);
+            return allowed.ToString();           
         }
+
+        public override void Run()
+        {
+            base.Run();
+
+            firstResult = Part1();
+            secondResult = Part2();           
+        }
+
     }
 }
