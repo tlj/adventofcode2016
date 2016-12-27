@@ -14,7 +14,7 @@ namespace AdventOfCode2016.Utils
         {
             public int X { get; private set; }
             public int Y { get; private set; }
-            public int Cost { get; private set; }
+            public int Cost { get; set; }
             public bool IsOpen { get; private set; }
 
             public MapSquare(int x, int y, int cost, bool isOpen)
@@ -63,7 +63,7 @@ namespace AdventOfCode2016.Utils
             {
                 CurrentSquare = currentSquare;
                 ParentPath = parentPath;
-                Cost = cost;
+                Cost = cost + currentSquare.Cost;
                 MovementCost = currentSquare.EuclideanDistance(targetSquare);
                 TotalCost = Cost + MovementCost;
             }

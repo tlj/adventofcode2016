@@ -88,7 +88,7 @@ namespace AdventOfCode2016.Solutions
             {
                 for (var x = 0; x < map.GetLength(1); x++)
                 {
-                    map[y, x] = new MapSquare(x, y, 1, IsOpen(x, y, favoriteNumber));
+                    map[y, x] = new MapSquare(x, y, 0, IsOpen(x, y, favoriteNumber));
                 }
             }
             return map;

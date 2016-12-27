@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventOfCode2016.Utils;
+using System;
 using System.Collections.Generic;
 
 namespace AdventOfCode2016.Solutions
@@ -27,6 +28,13 @@ namespace AdventOfCode2016.Solutions
         {
             base.Run();
 
+            var firstProgram = new Assembunny(new Dictionary<string, int>() { { "a", 7 }, { "b", 0 }, { "c", 0 }, { "d", 0 } });
+            firstProgram.Execute((string[])inputs.Clone());
+            firstResult = firstProgram.GetRegisterValue("a").ToString();
+
+            var secondProgram = new Assembunny(new Dictionary<string, int>() { { "a", 12 }, { "b", 0 }, { "c", 0 }, { "d", 0 } });
+            secondProgram.Execute((string[])inputs.Clone(), true);
+            secondResult = secondProgram.GetRegisterValue("a").ToString();
         }
     }
 }
