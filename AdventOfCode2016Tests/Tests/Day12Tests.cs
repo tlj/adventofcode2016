@@ -1,5 +1,6 @@
 using Xunit;
 using AdventOfCode2016.Solutions;
+using AdventOfCode2016.Utils;
 
 namespace AdventOfCode2016Tests
 {
@@ -8,21 +9,21 @@ namespace AdventOfCode2016Tests
         [Fact]
         public void SomeTest()
         {
-            var day = new Day12("");
-            day.Cpy("0", "a");
-            day.Cpy("2", "b");
-            day.Cpy("0", "c");
-            Assert.Equal(0, day.GetRegister("a"));
-            day.Inc("a");
-            Assert.Equal(1, day.GetRegister("a"));
-            day.Cpy("b", "c");
-            Assert.Equal(2, day.GetRegister("c"));
-            Assert.Equal(2, day.Jnz("1", "2"));
-            Assert.Equal(0, day.Jnz("0", "2"));
-            Assert.Equal(-2, day.Jnz("c", "-2"));
-            Assert.Equal(2, day.Jnz("b", "2"));
-            day.Cpy("0", "c");
-            Assert.Equal(0, day.Jnz("c", "2"));
+            var asm = new Assembunny();
+            asm.Cpy("0", "a");
+            asm.Cpy("2", "b");
+            asm.Cpy("0", "c");
+            Assert.Equal(0, asm.GetRegister("a"));
+            asm.Inc("a");
+            Assert.Equal(1, asm.GetRegister("a"));
+            asm.Cpy("b", "c");
+            Assert.Equal(2, asm.GetRegister("c"));
+            Assert.Equal(2, asm.Jnz("1", "2"));
+            Assert.Equal(0, asm.Jnz("0", "2"));
+            Assert.Equal(-2, asm.Jnz("c", "-2"));
+            Assert.Equal(2, asm.Jnz("b", "2"));
+            asm.Cpy("0", "c");
+            Assert.Equal(0, asm.Jnz("c", "2"));
         }
 
     }
